@@ -1,0 +1,31 @@
+version: '3.5'
+services:
+
+  postgres:
+    image: postgres:alpine
+    ports:
+      - "5432:5432"
+    container_name: 'postgres_database'
+    restart: always
+    environment:
+      POSTGRES_USER: admin
+      POSTGRES_PASSWORD: admin
+      POSTGRES_DB: data-base-name
+
+  localstack:
+    container_name: localstack
+    environment:
+      - DEBUG=1
+      - USE_SSL=0
+      - AWS_CBOR_DISABLE=1
+      - DOCKER_HOST=unix:///var/run/docker.sock
+      - HOSTNAME=localstack
+      - SERVICES=s3
+      - AWS_DEFAULT_REGION=us-east-1
+    image: localstack/localstack:latest
+    ports:
+      - "4566:4566" # sns
+      - "4583:4583" # s3
+      - "4576:4576" # sqs
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock

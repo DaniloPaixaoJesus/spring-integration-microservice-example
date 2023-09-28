@@ -1,0 +1,28 @@
+server:
+  port: ${PORT:8080}
+  servlet:
+    context-path: /spring-integration/example
+
+management:
+  endpoint:
+    health:
+      probes:
+        enabled: true
+  health:
+    livenessstate:
+      enabled: true
+    readinessstate:
+      enabled: true
+
+spring:
+  profiles:
+    active: ${ENVIRONMENT}
+  application:
+    name: spring-integration-example
+  main:
+    allow-bean-definition-overriding: true
+
+logging:
+  level:
+    br.com.danilopaixao: ${LOG_LEVEL:INFO}
+    reactor.netty.http.client: ${LOG_LEVEL:INFO}
